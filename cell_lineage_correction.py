@@ -120,10 +120,10 @@ class CellLineageCorrection(QMainWindow):
             # This creates a dictionary that maps the step number to the index of the row in the csv file
             temp_map = {}
             for i in range(temp_data.shape[0]):
-                step_num = temp_data.iloc[i, 0]
-                cell_id = temp_data.iloc[i, 2]
-                parent_id = temp_data.iloc[i, 10]
-                pos = temp_data.iloc[i, 11]
+                step_num = temp_data.iloc[i, temp_data.columns.get_loc("stepNum")]
+                cell_id = temp_data.iloc[i, temp_data.columns.get_loc("id")]
+                parent_id = temp_data.iloc[i, temp_data.columns.get_loc("parent_id")]
+                pos = temp_data.iloc[i, temp_data.columns.get_loc("pos")]
 
                 if step_num not in temp_map:
                     temp_map[step_num] = {
@@ -381,8 +381,8 @@ class CellLineageCorrection(QMainWindow):
             for cell_id, cell_info in step_info['cell_ids'].items():
                 index = cell_info['index']  # Get the index of the row in the csv_data
                 # Update the csv_data DataFrame at the specified index
-                self.csv_data.iloc[index, 2] = cell_id
-                self.csv_data.iloc[index, 10] = cell_info['parent_id']
+                self.csv_data.iloc[index, self.csv_data.columns.get_loc("id")] = cell_id
+                self.csv_data.iloc[index, self.csv_data.columns.get_loc("parent_id")] = cell_info['parent_id']
 
         # print("csv_data: ", self.csv_data, sep="\n")
         # Use a file dialog to get the location and name of the file to save
